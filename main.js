@@ -11,12 +11,15 @@ xhr.responseType = 'json';
 xhr.onreadystatechange = () => {
     if (xhr.readyState === XMLHttpRequest.DONE) {
         const pokemon = xhr.response;
-        
-           weight.innerHTML = `${pokemon.name}: weight: ${pokemon.weight}`
+        let weightInPounds = pokemon.weight / 4.54;
+        weightInPounds = weightInPounds.toFixed(2);
+           weight.innerHTML = `${pokemon.name}: weight: ${weightInPounds}lbs`
         }
     }
 xhr.open('GET',url + pokemonName);
 xhr.send();
+    } else {
+        weight.innerHTML = 'Please choose a valid Pokemon';
     }
 }
 
