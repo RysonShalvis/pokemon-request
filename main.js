@@ -7,9 +7,9 @@ xhr.responseType = 'json';
 
 xhr.onreadystatechange = () => {
     if (xhr.readyState === XMLHttpRequest.DONE) {
-
+        const pokemon = xhr.response;
         function showWeight() {
-           weight.innerHTML = xhr.response.weight
+           weight.innerHTML = `${pokemon.name}: weight: ${pokemon.weight}`
         }
 
         button.addEventListener('click', showWeight)
