@@ -2,6 +2,7 @@ const button = document.querySelector('button');
 const weight = document.querySelector('#pokemon-weight');
 const pokemonText = document.querySelector('#pokemon-text');
 const loadContainer = document.querySelector('.load-container');
+const anyPokemonInfo = document.querySelector('#pokemon-anything');
 function pokemonRequest () {
     
     let loading = document.createElement('p');
@@ -22,7 +23,8 @@ xhr.onreadystatechange = () => {
         const pokemon = xhr.response;
         let weightInPounds = pokemon.weight / 4.54;
         weightInPounds = weightInPounds.toFixed(2);
-           weight.innerHTML = `${pokemon.name}: weight: ${weightInPounds}lbs`
+           weight.innerHTML = `${pokemon.name}: weight: ${weightInPounds}lbs`;
+           anyPokemonInfo.innerHTML = pokemon.height;
         } catch (e) {
             weight.innerHTML = 'Please choose a valid Pokemon';
             console.log(e);
