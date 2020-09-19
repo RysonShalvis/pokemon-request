@@ -1,11 +1,18 @@
 const button = document.querySelector('#first-button');
 const body = document.querySelector('body');
 const weight = document.querySelector('#pokemon-weight');
-const pokemonText = document.querySelector('#pokemon-text');
+const pokemonTextOne = document.querySelector('#pokemon-text-one');
 const loadContainer = document.querySelector('.load-container');
 const pokemonMoves = document.querySelector('#pokemon-moves');
 const pokemonImage = document.querySelector('#pokemon-image');
 const anyInfo = document.querySelector('#any-info');
+const buttonTwo = document.querySelector('#second-button');
+const pokemonTextTwo = document.querySelector('#pokemon-text-two');
+pokemonOne = document.querySelector('.pokemon-one');
+pokemonTwo = document.querySelector('.pokemon-two');
+const pokemonNameOne = document.querySelector('#pokemon-name-one');
+const pokemonNameTwo = document.querySelector('#pokemon-name-two');
+const url = `https://pokeapi.co/api/v2/pokemon/`;
 pokemonImage.src = 'https://img.pokemondb.net/artwork/large/'
 function pokemonRequest () {
     let loading = document.createElement('p');
@@ -15,7 +22,6 @@ function pokemonRequest () {
     try {
     if (pokemonText.value) {
 const xhr = new XMLHttpRequest();
-const url = `https://pokeapi.co/api/v2/pokemon/`;
 xhr.responseType = 'json';
 xhr.onreadystatechange = () => {
     weight.innerHTML = '';
@@ -42,7 +48,7 @@ xhr.onreadystatechange = () => {
             pokemonMoves.innerHTML = `Moves: ${fourRandomMoves.join(', ')}`;
             anyInfo.innerHTML = `type: ${pokemon.types[0].type.name}`;
             console.log('types',pokemon.types[0].type.name)
-            body.style.backgroundImage =  `url(${pokemonImage.src}${pokemonText.value}.jpg)`;
+            pokemonOne.style.backgroundImage =  `url(${pokemonImage.src}${pokemonText.value}.jpg)`;
         } catch (e) {
             weight.innerHTML = 'Please choose a valid Pokemon';
             console.log(e);
@@ -59,5 +65,45 @@ xhr.send();
     }
 }
 
+function secondPokemonRequest(e) {
+    let inputField;
+    let pokemonContainer;
+    let movesArray;
+    let pokemonName;
+    if (e.target === buttonTwo) {
+        pokemonContainer = pokemonTwo;
+        inputField = pokemonTextTwo.value; 
+        pokemonName = pokemonNameTwo;
+    } else if (e.target === button) {
+        inputField = pokemonTextOne.value;
+        pokemonContainer = pokemonOne;
+        pokemonName = pokemonNameOne;
+    }
+    fetch(url + inputField)
+    .then(response => {
+        if (response.ok) {
+            return response.json();
+        }
+        throw new Error('Request failed! Choose valid Pokemon');
+    }, networkError => console.log(networkError.message)
+    ).then(pokemon => {
+        let weight = pokemon.weight;
+        let height = pokemon.height;
+        let name = pokemon.name;
+        let fourRandomMoves = [];
+        movesArray = pokemon['moves'];
+        for (i = 0; i < 5; i++) {
+            let randomMove = ~~(Math.random() * (movesArray.length) - 1);
+            fourRandomMoves.push(movesArray[randomMove]['move']['name']);
+        };
+        pokemonName.innerHTML = name;
+        pokemonContainer.style.backgroundImage =  `url(${pokemonImage.src}${inputField}.jpg)`;
+    })
+}
+
+
+
 console.log(pokemonImage)
-button.addEventListener('click',pokemonRequest);
+//button.addEventListener('click',pokemonRequest);
+buttonTwo.addEventListener('click',secondPokemonRequest);
+button.addEventListener('click',secondPokemonRequest);
