@@ -1,19 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="./styles.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pokemon</title>
 </head>
 <body>
-    <h1>Type in any pokemon(all lower case please)</h1>
-    <input id="pokemon-text" type="text">
-    <button id="button">Click Me</button>
+    <div class="form-one">
+        <h1>Type in any pokemon(all lower case please)</h1>
+        <input id="pokemon-text" type="text">
+        <button id="first-button">Click Me</button>
+    </div>
     <div class="load-container">
         
     </div>
     <p id="pokemon-weight"></p>
-    <p id="pokemon-anything"></p>
+    <p id="pokemon-moves" style="color: darkblue"></p>
+    <p id="any-info"></p>
     <img id="pokemon-image" src="https://img.pokemondb.net/artwork/large/" alt="" srcset="">
 
     <script src="./main.js"></script>
