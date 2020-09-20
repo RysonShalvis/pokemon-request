@@ -1,20 +1,25 @@
+
+//variables
 const button = document.querySelector('#first-button');
 const body = document.querySelector('body');
 const weight = document.querySelector('#pokemon-weight');
 const pokemonTextOne = document.querySelector('#pokemon-text-one');
 const loadContainer = document.querySelector('.load-container');
-const pokemonMoves = document.querySelector('#pokemon-moves');
+const pokemonMovesOne = document.querySelector('#pokemon-moves-one');
+const pokemonMovesTwo = document.querySelector('#pokemon-moves-two');
 const pokemonImage = document.querySelector('#pokemon-image');
 const anyInfo = document.querySelector('#any-info');
 const buttonTwo = document.querySelector('#second-button');
 const pokemonTextTwo = document.querySelector('#pokemon-text-two');
-pokemonOne = document.querySelector('.pokemon-one');
-pokemonTwo = document.querySelector('.pokemon-two');
+const pokemonOne = document.querySelector('.pokemon-one');
+const pokemonTwo = document.querySelector('.pokemon-two');
 const pokemonNameOne = document.querySelector('#pokemon-name-one');
 const pokemonNameTwo = document.querySelector('#pokemon-name-two');
 const url = `https://pokeapi.co/api/v2/pokemon/`;
-pokemonImage.src = 'https://img.pokemondb.net/artwork/large/'
-function pokemonRequest () {
+pokemonImage.src = 'https://img.pokemondb.net/artwork/large/';
+
+//functions
+/*function pokemonRequest () {
     let loading = document.createElement('p');
     loading.innerHTML = 'Loading';
     loadContainer.appendChild(loading);
@@ -63,21 +68,26 @@ xhr.send();
         weight.innerHTML = 'Please choose a valid Pokemon';
         console.log(e);
     }
-}
+}*/
 
 function secondPokemonRequest(e) {
     let inputField;
     let pokemonContainer;
     let movesArray;
     let pokemonName;
+    let pokemonMoves;
     if (e.target === buttonTwo) {
         pokemonContainer = pokemonTwo;
         inputField = pokemonTextTwo.value; 
+        inputField = inputField.toLowerCase();
         pokemonName = pokemonNameTwo;
+        pokemonMoves = pokemonMovesTwo
     } else if (e.target === button) {
         inputField = pokemonTextOne.value;
+        inputField = inputField.toLowerCase();
         pokemonContainer = pokemonOne;
         pokemonName = pokemonNameOne;
+        pokemonMoves = pokemonMovesOne;
     }
     fetch(url + inputField)
     .then(response => {
@@ -87,16 +97,22 @@ function secondPokemonRequest(e) {
         throw new Error('Request failed! Choose valid Pokemon');
     }, networkError => console.log(networkError.message)
     ).then(pokemon => {
-        let weight = pokemon.weight;
-        let height = pokemon.height;
+        let weight = pokemon.weight / 4.54;
+        weight = weight.toFixed(2);
+        let height = pokemon.height * 3.937;
+        height = height.toFixed(2)
         let name = pokemon.name;
         let fourRandomMoves = [];
         movesArray = pokemon['moves'];
-        for (i = 0; i < 5; i++) {
+        for (i = 0; i < 4; i++) {
             let randomMove = ~~(Math.random() * (movesArray.length) - 1);
             fourRandomMoves.push(movesArray[randomMove]['move']['name']);
+            if (i >= movesArray.length - 1) {
+                break;
+            }
         };
-        pokemonName.innerHTML = name;
+        pokemonName.innerHTML = `name: ${name}<br> Height: ${height}"<br>Weight: ${weight} Lbs`;
+        pokemonMoves.innerHTML = fourRandomMoves.join(', ')
         pokemonContainer.style.backgroundImage =  `url(${pokemonImage.src}${inputField}.jpg)`;
     })
 }
@@ -104,6 +120,7 @@ function secondPokemonRequest(e) {
 
 
 console.log(pokemonImage)
+//Add event listeners
 //button.addEventListener('click',pokemonRequest);
 buttonTwo.addEventListener('click',secondPokemonRequest);
 button.addEventListener('click',secondPokemonRequest);

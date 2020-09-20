@@ -1,16 +1,21 @@
 body {
-    width: 100%;
     margin: auto;
     text-align: center;
     background-color: darkslategray;
-    font-size: 50px;
+    font-size: 25px;
 }
 
-.form-one {
-    width: 100%;
-    margin: auto;
+.pokemon-one, .pokemon-two {
+    display: inline-block;
+    width: 49%;
     text-align: center;
+    min-height: 500px;
+    color: darkorange;
+    background-repeat: no-repeat;
+    
 }
+
+
 
 #pokemon-image {
     height: 500px;
