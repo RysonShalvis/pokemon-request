@@ -102,6 +102,15 @@ function secondPokemonRequest(e) {
         let height = pokemon.height * 3.937;
         height = height.toFixed(2)
         let name = pokemon.name;
+        let type = pokemon.types[0].type.name;
+        let hp = pokemon.stats[0].base_stat;
+        let attack = pokemon.stats[1].base_stat;
+        let defense = pokemon.stats[2].base_stat;
+        let specialAttack = pokemon.stats[3].base_stat;
+        let specialDefense = pokemon.stats[4].base_stat;
+        let speed = pokemon.stats[5].base_stat;
+        console.log(pokemon.stats[0]);
+        console.log(`type: ${type}`)
         let fourRandomMoves = [];
         movesArray = pokemon['moves'];
         for (i = 0; i < 4; i++) {
@@ -110,9 +119,12 @@ function secondPokemonRequest(e) {
             if (i >= movesArray.length - 1) {
                 break;
             }
+            
         };
-        pokemonName.innerHTML = `name: ${name}<br> Height: ${height}"<br>Weight: ${weight} Lbs`;
-        pokemonMoves.innerHTML = fourRandomMoves.join(', ')
+        pokemonName.innerHTML = `name: ${name}<br> Type: ${type}<br>Height: ${height}"<br>Weight: ${weight} Lbs<br>HP: ${hp}
+        <br> Attack: ${attack}<br> Defense: ${defense}<br>Special Attack: ${specialAttack}<br>
+        Special Defense: ${specialDefense}<br>Speed: ${speed}`;
+        pokemonMoves.innerHTML = `Moves: ${fourRandomMoves.join(', ')}`
         pokemonContainer.style.backgroundImage =  `url(${pokemonImage.src}${inputField}.jpg)`;
     })
 }
